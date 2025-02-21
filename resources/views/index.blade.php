@@ -6,17 +6,16 @@
         <div class="absolute inset-0 backdrop-blur-md"></div>
 
         <!-- Centered White Box -->
-        <div class="relative flex items-center justify-center h-full">
-            <div class="bg-white bg-opacity-50 w-3/5 h-80 p-12 rounded-md shadow-lg text-center flex flex-col justify-center">
-                <h1 class="text-gray-900 text-5xl font-bold">
+        <div class="relative flex items-center justify-center h-full px-4">
+            <div class="bg-white bg-opacity-50 w-4/5 max-w-5xl h-auto min-h-80 py-10 px-6 sm:px-10 rounded-md shadow-lg text-center flex flex-col justify-center">
+                <h1 class="text-gray-900 text-4xl sm:text-5xl mt-5 font-bold">
                     Love dogs?
                 </h1>
-                <h2 class="text-gray-700 py-3 px-6 text-3xl font-bold">
+                <h2 class="text-gray-700 py-3 text-2xl sm:text-3xl font-bold">
                     You're at the right place!
                 </h2>
-                <a
-                    href="/blog"
-                    class="mt-10 inline-block bg-pink-100 py-3 px-7 font-bold text-xl uppercase rounded">
+                <a href="/blog"
+                   class="mt-6 ml-15 mr-15 inline-block bg-pink-100 py-3 px-6 font-bold text-lg uppercase rounded">
                     Read More
                 </a>
             </div>
