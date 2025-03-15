@@ -31,4 +31,10 @@ class Post extends Model
     {
         return $this->hasMany(Like::class);
     }
+
+    // enable route model binding by slug
+    public function getRouteKeyName()
+    {
+        return 'slug';  // Use the 'slug' column for route model binding
+    }
 }

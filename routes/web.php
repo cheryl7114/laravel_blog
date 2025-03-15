@@ -20,8 +20,8 @@ Route::get('/', [PagesController::class, 'index']);
 
 Route::resource('/blog', PostsController::class);
 
-Route::post('/like/{post}', [LikeController::class, 'store'])->name('like.store');
-Route::delete('/like/{post}', [LikeController::class, 'destroy'])->name('like.destroy');
+Route::post('/like/{post:slug}', [LikeController::class, 'store'])->name('like.store');
+Route::delete('/like/{post:slug}', [LikeController::class, 'destroy'])->name('like.destroy');
 
 Auth::routes();
 
