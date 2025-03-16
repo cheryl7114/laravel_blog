@@ -2,7 +2,8 @@
 
 @section('content')
 <div class="w-4/5 m-auto text-left">
-    <div class="py-15">
+    <div class="py-10">
+        @include('layouts.back')
         <h1 class="text-4xl font-bold text-gray-900">
             {{ $post->title }}
         </h1>
