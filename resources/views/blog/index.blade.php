@@ -21,12 +21,22 @@
 </div>
 
 @if (session()->has('message'))
-<div class="w-4/5 m-auto mt-15 pl-2">
-    <p class="w-2/6 mb-4 text-gray-50 bg-green-500 rounded-2xl py-4 text-center">
-        {{ session()->get('message') }}
-    </p>
+<div class="w-4/5 m-auto mt-15">
+    <div class="bg-green-500 text-white rounded-lg shadow-lg p-4 flex items-center justify-between">
+        <p class="text-lg font-semibold">
+            {{ session()->get('message') }}
+        </p>
+        <button
+            onclick="this.parentElement.style.display='none';"
+            class="ml-4 bg-transparent text-white hover:text-gray-300 transition duration-300 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                <path d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
 </div>
 @endif
+
 
 @foreach ($posts as $post)
 <div class="sm:grid grid-cols-1 lg:grid-cols-2 gap-20 w-4/5 mx-auto bg-red-200 shadow-lg rounded-lg mt-15 transition-all duration-300 hover:shadow-xl hover:scale-105 p-15">

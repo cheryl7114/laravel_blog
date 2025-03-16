@@ -1,62 +1,92 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="w-4/5 m-auto text-left">
-    <div class="py-15">
-        <h1 class="text-6xl">
-            Create Post
-        </h1>
-    </div>
-</div>
- 
-@if ($errors->any())
-    <div class="w-4/5 m-auto">
+<div class="w-4/5 md:w-3/5 mx-auto text-left py-10">
+    <a href="javascript:history.back()" class="mt-3 mb-8 flex items-center text-blue-500 hover:text-blue-600">
+        <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Back
+    </a>
+    <h1 class="text-4xl font-bold text-gray-800 mb-8">
+        Create Post
+    </h1>
+
+    @if ($errors->any())
+    <div class="w-full bg-red-500 text-white rounded-lg p-4 mb-6">
         <ul>
             @foreach ($errors->all() as $error)
-                <li class="w-1/5 mb-4 text-gray-50 bg-red-700 rounded-2xl py-4">
-                    {{ $error }}
-                </li>
+            <li>{{ $error }}</li>
             @endforeach
         </ul>
     </div>
-@endif
+    @endif
 
-<div class="w-4/5 m-auto pt-20">
-    <form 
-        action="/blog"
-        method="POST"
-        enctype="multipart/form-data">
+    <form action="/blog" method="POST" enctype="multipart/form-data" class="bg-white p-8 rounded-lg shadow-lg">
         @csrf
-
-        <input 
-            type="text"
-            name="title"
-            placeholder="Title..."
-            class="bg-transparent block border-b-2 w-full h-20 text-6xl outline-none">
-
-        <textarea 
-            name="description"
-            placeholder="Description..."
-            class="py-20 bg-transparent block border-b-2 w-full h-60 text-xl outline-none"></textarea>
-
-        <div class="bg-grey-lighter pt-15">
-            <label class="w-44 flex flex-col items-center px-2 py-3 bg-white-rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer">
-                <span class="mt-2 text-base leading-normal">
-                    Select a file
-                </span>
-                <input 
-                    type="file"
-                    name="image"
-                    class="hidden">
-            </label>
+        <!-- Title Input -->
+        <div class="mb-6 mt-5">
+            <label for="title" class="block text-lg font-medium text-gray-700 mb-2">Post Title</label>
+            <input
+                type="text"
+                name="title"
+                id="title"
+                placeholder="Enter your post title"
+                class="block w-full px-4 py-3 text-xl bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
         </div>
 
-        <button    
-            type="submit"
-            class="uppercase mt-15 bg-blue-500 text-gray-100 text-lg font-extrabold py-4 px-8 rounded-3xl">
+        <!-- Description Textarea -->
+        <div class="mb-6 mt-10">
+            <label for="description" class="block text-lg font-medium text-gray-700 mb-2">Description</label>
+            <textarea
+                name="description"
+                id="description"
+                placeholder="Enter post description..."
+                class="block w-full px-4 py-3 text-xl bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 h-52"></textarea>
+        </div>
+
+        <!-- Image Upload with Preview -->
+        <div class="mb-6 mt-10">
+            <label class="block text-lg font-medium text-gray-700 mb-2">Upload an Image</label>
+            <div class="relative">
+                <input
+                    type="file"
+                    name="image"
+                    id="image-upload"
+                    class="hidden"
+                    onchange="previewImage(event)">
+                <label for="image-upload" class="block w-full cursor-pointer bg-gray-100 text-lg font-medium text-gray-700 py-3 px-6 rounded-lg shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                    Choose an image
+                </label>
+                <div id="image-preview" class="mt-4 hidden">
+                    <img id="image-preview-img" src="#" alt="Image Preview" class="w-40 h-40 object-cover rounded-lg shadow-md">
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="w-full bg-blue-500 text-white text-xl py-3 rounded-lg shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 mt-5 mb-5">
             Submit Post
         </button>
     </form>
 </div>
+
+<script>
+    function previewImage(event) {
+        const preview = document.getElementById('image-preview');
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const image = document.getElementById('image-preview-img');
+            image.src = e.target.result;
+            preview.classList.remove('hidden');
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
 
 @endsection
