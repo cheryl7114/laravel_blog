@@ -23,6 +23,13 @@ Route::resource('/blog', PostsController::class);
 Route::post('/like/{post:slug}', [LikeController::class, 'store'])->name('like.store');
 Route::delete('/like/{post:slug}', [LikeController::class, 'destroy'])->name('like.destroy');
 
+Route::middleware(['auth', 'admin'])->group(function () {
+    // Admin routes
+    Route::get('/admin', function () {
+        return view('admin.dashboard');
+    });
+});
+
 Auth::routes();
 
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
