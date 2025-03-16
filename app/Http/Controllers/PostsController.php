@@ -8,11 +8,14 @@ use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class PostsController extends Controller
 {
- 
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['index', 'show']]);
+
+        // Ensure only admins can create, store, edit, update, and destroy posts
+        $this->middleware('admin', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -129,4 +132,3 @@ class PostsController extends Controller
             ->with('message', 'Your post has been deleted!');
     }
 }
-
