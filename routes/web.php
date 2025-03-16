@@ -19,13 +19,7 @@ use App\Http\Controllers\LikeController;
 // Public route for homepage
 Route::get('/', [PagesController::class, 'index']);
 
-// Public route for blog
-Route::resource('/blog', PostsController::class)->except(['create', 'store', 'edit', 'update']); // Exclude create/store/edit/update for non-admins
-
-Route::post('/like/{post:slug}', [LikeController::class, 'store'])->name('like.store');
-Route::delete('/like/{post:slug}', [LikeController::class, 'destroy'])->name('like.destroy');
-
-// Admin routes (only accessible to admins)
+// Admin routes first (to take precedence)
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', function () {
         return view('admin.dashboard');
@@ -38,6 +32,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/blog/{post:slug}', [PostsController::class, 'update']);
     Route::delete('/blog/{post:slug}', [PostsController::class, 'destroy']);
 });
+
+// Public blog routes (with only show and index)
+Route::get('/blog', [PostsController::class, 'index']);
+Route::get('/blog/{post:slug}', [PostsController::class, 'show']);
+
+// Like routes
+Route::post('/like/{post:slug}', [LikeController::class, 'store'])->name('like.store');
+Route::delete('/like/{post:slug}', [LikeController::class, 'destroy'])->name('like.destroy');
 
 // Authentication routes
 Auth::routes();

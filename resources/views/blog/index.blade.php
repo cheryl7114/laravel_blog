@@ -8,7 +8,7 @@
         </h1>
 
         <!-- Add Post Icon -->
-        @if (Auth::check())
+        @if (Auth::check() && Auth::user()->is_admin == 1)
         <a href="/blog/create" class="text-blue-400 hover:text-blue-700 transition duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" viewBox="0 -1 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10" />
