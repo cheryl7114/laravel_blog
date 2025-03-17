@@ -21,7 +21,6 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // /blog will only show blog posts, and /community will only show community posts
     public function index(Request $request)
     {
         $type = $request->input('type', 'blog'); // Default to blog posts
@@ -36,7 +35,11 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('blog.create');
+        // Automatically determine the post type
+        $postType = auth()->user()->is_admin ? 'blog' : 'community';
+
+        // Pass the postType to the view
+        return view('posts.create', compact('postType'));
     }
 
     /**
@@ -56,7 +59,8 @@ class PostsController extends Controller
         $newImageName = uniqid() . '-' . $request->title . '.' . $request->image->extension();
         $request->image->move(public_path('images'), $newImageName);
 
-        $postType = auth()->user()->is_admin ? 'blog' : 'community';
+        // Set the post type based on whether the user is an admin
+        $postType = $request->input('type', auth()->user()->is_admin ? 'blog' : 'community');
 
         Post::create([
             'title' => $request->input('title'),
@@ -79,7 +83,7 @@ class PostsController extends Controller
      */
     public function show($slug)
     {
-        return view('blog.show')
+        return view('posts.show')
             ->with('post', Post::where('slug', $slug)->first());
     }
 
@@ -91,8 +95,10 @@ class PostsController extends Controller
      */
     public function edit($slug)
     {
-        return view('blog.edit')
-            ->with('post', Post::where('slug', $slug)->first());
+        $post = Post::where('slug', $slug)->firstOrFail();
+
+        // Pass the post to the view for editing
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -109,38 +115,44 @@ class PostsController extends Controller
             'description' => 'required',
         ]);
 
-        Post::where('slug', $slug)
-            ->update([
-                'title' => $request->input('title'),
-                'description' => $request->input('description'),
-                'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
-                'user_id' => auth()->user()->id
-            ]);
+        $post = Post::where('slug', $slug)->firstOrFail();
 
-        return redirect('/blog')
+        // Update post details
+        $post->update([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
+            'user_id' => auth()->user()->id,
+            'type' => $post->type  // Preserve the type (blog or community)
+        ]);
+
+        return redirect($post->type == 'blog' ? '/blog' : '/community')
             ->with('message', 'Your post has been updated!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    // Only admins can delete blog posts; users can only delete their own community posts
     public function destroy($slug)
     {
         $post = Post::where('slug', $slug)->firstOrFail();
 
+        // Only admins can delete blog posts
         if ($post->type == 'blog' && !auth()->user()->is_admin) {
             return redirect()->back()->with('error', 'You cannot delete a blog post.');
         }
 
+        // Users can only delete their own posts
         if ($post->type == 'community' && $post->user_id != auth()->user()->id) {
             return redirect()->back()->with('error', 'You can only delete your own posts.');
         }
 
+        // Delete the post
         $post->delete();
-        return redirect($post->type == 'blog' ? '/blog' : '/community')->with('message', 'Your post has been deleted!');
+        return redirect($post->type == 'blog' ? '/blog' : '/community')
+            ->with('message', 'Your post has been deleted!');
     }
 }
