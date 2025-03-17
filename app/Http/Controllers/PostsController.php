@@ -21,10 +21,12 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    // /blog will only show blog posts, and /community will only show community posts
+    public function index(Request $request)
     {
-        return view('blog.index')
-            ->with('posts', Post::orderBy('updated_at', 'DESC')->get());
+        $type = $request->input('type', 'blog'); // Default to blog posts
+        return view($type == 'blog' ? 'blog.index' : 'community.index')
+            ->with('posts', Post::where('type', $type)->orderBy('updated_at', 'DESC')->get());
     }
 
     /**
@@ -52,18 +54,20 @@ class PostsController extends Controller
         ]);
 
         $newImageName = uniqid() . '-' . $request->title . '.' . $request->image->extension();
-
         $request->image->move(public_path('images'), $newImageName);
+
+        $postType = auth()->user()->is_admin ? 'blog' : 'community';
 
         Post::create([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
             'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
             'image_path' => $newImageName,
-            'user_id' => auth()->user()->id
+            'user_id' => auth()->user()->id,
+            'type' => $postType
         ]);
 
-        return redirect('/blog')
+        return redirect($postType == 'blog' ? '/blog' : '/community')
             ->with('message', 'Your post has been added!');
     }
 
@@ -123,12 +127,20 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // Only admins can delete blog posts; users can only delete their own community posts
     public function destroy($slug)
     {
-        $post = Post::where('slug', $slug);
-        $post->delete();
+        $post = Post::where('slug', $slug)->firstOrFail();
 
-        return redirect('/blog')
-            ->with('message', 'Your post has been deleted!');
+        if ($post->type == 'blog' && !auth()->user()->is_admin) {
+            return redirect()->back()->with('error', 'You cannot delete a blog post.');
+        }
+
+        if ($post->type == 'community' && $post->user_id != auth()->user()->id) {
+            return redirect()->back()->with('error', 'You can only delete your own posts.');
+        }
+
+        $post->delete();
+        return redirect($post->type == 'blog' ? '/blog' : '/community')->with('message', 'Your post has been deleted!');
     }
 }
