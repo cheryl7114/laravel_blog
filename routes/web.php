@@ -30,25 +30,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/blog/{post:slug}', [PostsController::class, 'destroy']);
 });
 
-// Authenticated user routes (community post management)
+// Authenticated user routes
 Route::middleware(['auth'])->group(function () {
-    Route::get('/community/create', [PostsController::class, 'create']);
-    Route::post('/community', [PostsController::class, 'store']);
-    Route::get('/community/{post:slug}/edit', [PostsController::class, 'edit']);
-    Route::put('/community/{post:slug}', [PostsController::class, 'update']);
-    Route::delete('/community/{post:slug}', [PostsController::class, 'destroy']);
+    // Like routes for blog posts
+    Route::post('/like/{post:slug}', [LikeController::class, 'store'])->name('like.store');
+    Route::delete('/like/{post:slug}', [LikeController::class, 'destroy'])->name('like.destroy');
 });
 
-// Public routes (viewing blog/community posts)
-Route::get('/blog', [PostsController::class, 'index'])->defaults('type', 'blog')->name('blog.index');
+// Public routes (viewing blog posts)
+Route::get('/blog', [PostsController::class, 'index'])->name('blog.index');
 Route::get('/blog/{post:slug}', [PostsController::class, 'show']);
-
-Route::get('/community', [PostsController::class, 'index'])->defaults('type', 'community')->name('community.index');
-Route::get('/community/{post:slug}', [PostsController::class, 'show']);
-
-// Like routes for both blog and community posts
-Route::post('/like/{post:slug}', [LikeController::class, 'store'])->name('like.store');
-Route::delete('/like/{post:slug}', [LikeController::class, 'destroy'])->name('like.destroy');
 
 // Authentication routes
 Auth::routes();
