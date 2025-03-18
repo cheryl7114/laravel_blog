@@ -11,31 +11,37 @@ class PostsController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['index', 'show']]);
+
+        // Ensure only admins can create, store, edit, update, and destroy posts
         $this->middleware('admin', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
     }
 
     /**
-     * Display a listing of blog or community posts.
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $type = $request->input('type', 'blog'); // Default to 'blog'
-        $posts = Post::where('type', $type)->orderBy('updated_at', 'DESC')->get();
-
-        return view('blog.index', compact('posts', 'type'));
+        return view('blog.index')
+            ->with('posts', Post::orderBy('updated_at', 'DESC')->get());
     }
 
     /**
-     * Show the form for creating a post.
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        $postType = auth()->user()->is_admin ? 'blog' : 'community';
-        return view('blog.create', compact('postType'));
+        return view('blog.create');
     }
 
     /**
-     * Store a newly created post.
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -46,42 +52,51 @@ class PostsController extends Controller
         ]);
 
         $newImageName = uniqid() . '-' . $request->title . '.' . $request->image->extension();
-        $request->image->move(public_path('images'), $newImageName);
 
-        $postType = $request->input('type', auth()->user()->is_admin ? 'blog' : 'community');
+        $request->image->move(public_path('images'), $newImageName);
 
         Post::create([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
             'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
             'image_path' => $newImageName,
-            'user_id' => auth()->user()->id,
-            'type' => $postType
+            'user_id' => auth()->user()->id
         ]);
 
-        return redirect('/blog')->with('message', 'Your post has been added!');
+        return redirect('/blog')
+            ->with('message', 'Your post has been added!');
     }
 
     /**
-     * Display a single post.
+     * Display the specified resource.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Http\Response
      */
     public function show($slug)
     {
-        $post = Post::where('slug', $slug)->firstOrFail();
-        return view('blog.show', compact('post'));
+        return view('blog.show')
+            ->with('post', Post::where('slug', $slug)->first());
     }
 
     /**
-     * Show the form for editing a post.
+     * Show the form for editing the specified resource.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Http\Response
      */
     public function edit($slug)
     {
-        $post = Post::where('slug', $slug)->firstOrFail();
-        return view('blog.edit', compact('post'));
+        return view('blog.edit')
+            ->with('post', Post::where('slug', $slug)->first());
     }
 
     /**
-     * Update a post.
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $slug
+     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $slug)
     {
@@ -90,33 +105,30 @@ class PostsController extends Controller
             'description' => 'required',
         ]);
 
-        $post = Post::where('slug', $slug)->firstOrFail();
+        Post::where('slug', $slug)
+            ->update([
+                'title' => $request->input('title'),
+                'description' => $request->input('description'),
+                'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
+                'user_id' => auth()->user()->id
+            ]);
 
-        $post->update([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
-        ]);
-
-        return redirect('/blog')->with('message', 'Your post has been updated!');
+        return redirect('/blog')
+            ->with('message', 'Your post has been updated!');
     }
 
     /**
-     * Delete a post.
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
     public function destroy($slug)
     {
-        $post = Post::where('slug', $slug)->firstOrFail();
-
-        if ($post->type == 'blog' && !auth()->user()->is_admin) {
-            return redirect()->back()->with('error', 'You cannot delete a blog post.');
-        }
-
-        if ($post->type == 'community' && $post->user_id != auth()->user()->id) {
-            return redirect()->back()->with('error', 'You can only delete your own posts.');
-        }
-
+        $post = Post::where('slug', $slug);
         $post->delete();
-        return redirect('/blog')->with('message', 'Your post has been deleted!');
+
+        return redirect('/blog')
+            ->with('message', 'Your post has been deleted!');
     }
 }
