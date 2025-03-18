@@ -39,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
 
 // Public routes (viewing blog posts)
 Route::get('/blog', [PostsController::class, 'index'])->name('blog.index');
-Route::get('/blog/{post:slug}', [PostsController::class, 'show']);
+Route::get('/blog/{post:slug}', [PostsController::class, 'show'])->name('blog.show');
 
 // Authentication routes
 Auth::routes();
