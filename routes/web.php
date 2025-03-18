@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,11 +16,42 @@ use App\Http\Controllers\PostsController;
 |
 */
 
+// Public route for homepage
 Route::get('/', [PagesController::class, 'index']);
 
-Route::resource('/blog', PostsController::class);
+// Admin routes (only admins can create/edit/delete blog posts)
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::view('/admin', 'admin.dashboard');
 
+    Route::get('/blog/create', [PostsController::class, 'create']);
+    Route::post('/blog', [PostsController::class, 'store']);
+    Route::get('/blog/{post:slug}/edit', [PostsController::class, 'edit']);
+    Route::put('/blog/{post:slug}', [PostsController::class, 'update']);
+    Route::delete('/blog/{post:slug}', [PostsController::class, 'destroy']);
+});
+
+// Authenticated user routes (community post management)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/community/create', [PostsController::class, 'create']);
+    Route::post('/community', [PostsController::class, 'store']);
+    Route::get('/community/{post:slug}/edit', [PostsController::class, 'edit']);
+    Route::put('/community/{post:slug}', [PostsController::class, 'update']);
+    Route::delete('/community/{post:slug}', [PostsController::class, 'destroy']);
+});
+
+// Public routes (viewing blog/community posts)
+Route::get('/blog', [PostsController::class, 'index'])->defaults('type', 'blog')->name('blog.index');
+Route::get('/blog/{post:slug}', [PostsController::class, 'show']);
+
+Route::get('/community', [PostsController::class, 'index'])->defaults('type', 'community')->name('community.index');
+Route::get('/community/{post:slug}', [PostsController::class, 'show']);
+
+// Like routes for both blog and community posts
+Route::post('/like/{post:slug}', [LikeController::class, 'store'])->name('like.store');
+Route::delete('/like/{post:slug}', [LikeController::class, 'destroy'])->name('like.destroy');
+
+// Authentication routes
 Auth::routes();
 
-Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+// Home route
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
