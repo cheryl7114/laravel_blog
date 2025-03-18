@@ -8,10 +8,9 @@ use Cviebrock\EloquentSluggable\Sluggable;
 
 class Post extends Model
 {
-    use HasFactory;
-    use Sluggable;
+    use HasFactory, Sluggable;
 
-    protected $fillable = ['title', 'slug', 'description', 'image_path', 'user_id'];
+    protected $fillable = ['title', 'slug', 'description', 'image_path', 'user_id', 'type'];
 
     public function user()
     {
@@ -32,9 +31,21 @@ class Post extends Model
         return $this->hasMany(Like::class);
     }
 
-    // enable route model binding by slug
+    // Tells Laravel to use the slug column as identification instead of postID
     public function getRouteKeyName()
     {
-        return 'slug';  // Use the 'slug' column for route model binding
+        return 'slug';
+    }
+
+    // Scope for filtering blog posts
+    public function scopeBlog($query)
+    {
+        return $query->where('type', 'blog');
+    }
+
+    // Scope for filtering community posts
+    public function scopeCommunity($query)
+    {
+        return $query->where('type', 'community');
     }
 }
