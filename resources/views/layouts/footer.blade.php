@@ -31,28 +31,13 @@
 
         <div>
             <h3 class="text-l sm:font-bold text-gray-100">
-                Find Us
+                Reach Out
             </h3>
 
             <ul class="py-4 sm:text-s pt-4 text-gray-400">
                 <li class="pb-1">
                     <a href="/">
-                        What we do
-                    </a>
-                </li>
-                <li class="pb-1">
-                    <a href="/">
-                        Address
-                    </a>
-                </li>
-                <li class="pb-1">
-                    <a href="/">
-                        Phone
-                    </a>
-                </li>
-                <li class="pb-1">
-                    <a href="/">
-                        Contact
+                        Contact Us
                     </a>
                 </li>
             </ul>
@@ -65,8 +50,8 @@
 
             <ul class="py-4 sm:text-s pt-4 text-gray-400">
                 <li class="pb-1">
-                    <a href="/">
-                        Why we love tech
+                    <a href="/blog/cute-little-boba-2">
+                        Cute Little Boba
                     </a>
                 </li>
                 <li class="pb-1">

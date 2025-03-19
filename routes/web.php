@@ -19,6 +19,9 @@ use App\Http\Controllers\LikeController;
 // Public route for homepage
 Route::get('/', [PagesController::class, 'index']);
 
+// Public route for contact us
+Route::get('/contact', [PagesController::class, 'contact'])->name('contact.index');
+
 // Admin routes (only admins can create/edit/delete blog posts)
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::view('/admin', 'admin.dashboard');
