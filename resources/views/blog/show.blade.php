@@ -8,7 +8,7 @@
             {{ $post->title }}
         </h1>
         <span class="text-gray-500 block text-lg mt-5">
-            By <span class="font-bold italic text-gray-800">{{ $post->user->name }}</span>, Created on {{ date('jS M Y', strtotime($post->updated_at)) }}
+            By <span class="font-bold italic text-gray-800">{{ $post->user->name }}</span>, Created on {{ date('jS M Y', strtotime($post->created_at)) }}
         </span>
     </div>
 </div>
