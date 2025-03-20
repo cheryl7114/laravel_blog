@@ -11,8 +11,22 @@
             Pulabo is my little corner of the internet, dedicated to my love for dogs. Whether I’m sharing training tips, heartwarming stories, or dog-friendly adventures, this blog is all about the joys (and occasional chaos) of life with dogs.
         </p>
         <p class="mt-8 text-gray-700 text-lg leading-loose">
-            You're probably wondering where "Pulabo" came from - well, it's the combination of the names of own furry buddies: Pudding, Latte, and Boba 🐶💖
+            You're probably wondering where "Pulabo" came from - well, it's the combination of the names of my own furry buddies: Pudding, Latte, and Boba 🐶💖
         </p>
+    </div>
+
+    <div class="max-w-4xl mx-auto mt-16 px-6">
+        <div class="grid sm:grid-cols-3 gap-8 mt-12">
+            <div class="relative">
+                <img src="{{ asset('images/pudding2.jpg') }}" class="rounded-lg w-full max-w-xs mx-auto h-auto object-contain shadow-lg" alt="Pulabo moment 1">
+            </div>
+            <div class="relative">
+                <img src="{{ asset('images/latte2.jpg') }}" class="rounded-lg w-full max-w-xs mx-auto h-auto object-contain shadow-lg" alt="Pulabo moment 2">
+            </div>
+            <div class="relative">
+                <img src="{{ asset('images/boba2.jpg') }}" class="rounded-lg w-full max-w-xs mx-auto h-auto object-contain shadow-lg" alt="Pulabo moment 3">
+            </div>
+        </div>
     </div>
 
     <div class="max-w-5xl mx-auto mt-16 px-6">
@@ -49,8 +63,8 @@
                     <p class="text-gray-600 mt-4 text-lg">Visiting dog cafés around the world</p>
                 </div>
                 <div class="bg-white p-8 shadow-xl rounded-xl text-center transform hover:-translate-y-2 transition-all duration-300">
-                    <h3 class="text-2xl font-bold text-pink-500">📸 Most Snapped Photo</h3>
-                    <p class="text-gray-600 mt-4 text-lg">My dog sleeping in funny positions</p>
+                    <h3 class="text-2xl font-bold text-pink-500">📸 Most Snapped Photos</h3>
+                    <p class="text-gray-600 mt-4 text-lg">My dogs sleeping in funny positions</p>
                 </div>
             </div>
         </div>
@@ -65,19 +79,19 @@
             <div class="bg-white p-8 shadow-xl rounded-lg text-center transform hover:-translate-y-1 transition-all duration-300">
                 <h3 class="text-2xl font-bold text-gray-800">Pudding</h3>
                 <div class="mt-4">
-                    <img src="{{ asset('images/pudding.JPG') }}" class="rounded-lg w-full h-96 object-cover" alt="Dog journey">
+                    <img src="{{ asset('images/pudding.JPG') }}" class="rounded-lg w-full h-96 object-cover" alt="pudding">
                 </div>
             </div>
             <div class="bg-white p-8 shadow-xl rounded-lg text-center transform hover:-translate-y-1 transition-all duration-300">
                 <h3 class="text-2xl font-bold text-gray-800">Latte</h3>
                 <div class="mt-4">
-                    <img src="{{ asset('images/latte.png') }}" class="rounded-lg w-full h-96 object-cover" alt="Dog journey">
+                    <img src="{{ asset('images/latte.png') }}" class="rounded-lg w-full h-96 object-cover" alt="latte">
                 </div>
             </div>
             <div class="bg-white p-8 shadow-xl rounded-lg text-center transform hover:-translate-y-1 transition-all duration-300">
                 <h3 class="text-2xl font-bold text-gray-800">Boba</h3>
                 <div class="mt-4">
-                    <img src="{{ asset('images/boba.png') }}" class="rounded-lg w-full h-96 object-cover" alt="Dog journey">
+                    <img src="{{ asset('images/boba.png') }}" class="rounded-lg w-full h-96 object-cover" alt="boba">
                 </div>
             </div>
         </div>
