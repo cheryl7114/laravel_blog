@@ -33,28 +33,34 @@
         </div>
     </div>
 
-    <div class="max-w-4xl mx-auto mt-16 px-6 text-center">
-        <h2 class="text-4xl font-bold text-gray-800">Some Fun Facts 🐕</h2>
-        <p class="text-gray-600 mt-4 text-lg leading-loose">
-            Here are some fun things about me and my dog-loving life!
-        </p>
-        <div class="grid sm:grid-cols-3 gap-6 mt-8">
-            <div class="bg-white p-6 shadow-md rounded-lg text-center">
-                <h3 class="text-xl font-bold text-pink-500">🐶 Favorite Dog Breed</h3>
-                <p class="text-gray-600 mt-3 text-lg">Golden Retriever (but I love all dogs!)</p>
-            </div>
-            <div class="bg-white p-6 shadow-md rounded-lg text-center">
-                <h3 class="text-xl font-bold text-pink-500">🌎 Dream Dog Travel</h3>
-                <p class="text-gray-600 mt-3 text-lg">Visiting dog cafés around the world</p>
-            </div>
-            <div class="bg-white p-6 shadow-md rounded-lg text-center">
-                <h3 class="text-xl font-bold text-pink-500">📸 Most Snapped Photo</h3>
-                <p class="text-gray-600 mt-3 text-lg">My dog sleeping in funny positions</p>
+    <div class="bg-gradient-to-b from-blue-100 to-blue-300 mt-36 mb-36 py-20">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-extrabold text-gray-800 drop-shadow-md">Some Fun Facts 🐕</h2>
+            <p class="text-gray-700 mt-4 text-lg leading-relaxed">
+                Here are some fun things about me and my dog-loving life!
+            </p>
+            <div class="grid sm:grid-cols-3 gap-8 mt-12">
+                <div class="bg-white p-8 shadow-xl rounded-xl text-center transform hover:-translate-y-2 transition-all duration-300">
+                    <h3 class="text-2xl font-bold text-pink-500">🐶 Favorite Dog Breed</h3>
+                    <p class="text-gray-600 mt-4 text-lg">Golden Retriever (but I love all dogs!)</p>
+                </div>
+                <div class="bg-white p-8 shadow-xl rounded-xl text-center transform hover:-translate-y-2 transition-all duration-300">
+                    <h3 class="text-2xl font-bold text-pink-500">🌎 Dream Dog Travel</h3>
+                    <p class="text-gray-600 mt-4 text-lg">Visiting dog cafés around the world</p>
+                </div>
+                <div class="bg-white p-8 shadow-xl rounded-xl text-center transform hover:-translate-y-2 transition-all duration-300">
+                    <h3 class="text-2xl font-bold text-pink-500">📸 Most Snapped Photo</h3>
+                    <p class="text-gray-600 mt-4 text-lg">My dog sleeping in funny positions</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="max-w-5xl mx-auto mt-16 px-6">
+    <div class="max-w-5xl mx-auto mt-16 px-6 text-center">
+        <h2 class="text-4xl font-extrabold text-gray-800 drop-shadow-md">Meet The Gang! 🐕</h2>
+        <p class="text-gray-700 mt-4 text-lg leading-relaxed mb-12">
+            As much as I love all dogs, these 3 will always be my favourite <3
+        </p>
         <div class="grid sm:grid-cols-3 gap-12">
             <div class="bg-white p-8 shadow-xl rounded-lg text-center transform hover:-translate-y-1 transition-all duration-300">
                 <h3 class="text-2xl font-bold text-gray-800">Pudding</h3>
@@ -77,7 +83,7 @@
         </div>
     </div>
 
-    <div class="text-center mt-16">
+    <div class="text-center mt-32">
         <a href="/blog" class="bg-pink-500 text-white py-4 px-8 rounded-full text-xl font-bold shadow-lg hover:bg-pink-600 transition duration-300">
             Explore My Blog
         </a>
