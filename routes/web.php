@@ -22,6 +22,9 @@ Route::get('/', [PagesController::class, 'index']);
 // Public route for contact us
 Route::get('/contact', [PagesController::class, 'contact'])->name('contact.index');
 
+// Public route for about us
+Route::get('/about', [PagesController::class, 'about'])->name('about.index');
+
 // Admin routes (only admins can create/edit/delete blog posts)
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::view('/admin', 'admin.dashboard');
