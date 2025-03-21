@@ -3,7 +3,7 @@
 @section('content')
 <div class="w-4/5 md:w-3/5 mx-auto text-left py-10">
     @include('layouts.back')
-    <h1 class="text-4xl font-bold text-gray-800 mb-8">
+    <h1 class="text-4xl font-bold text-gray-800 mb-10">
         Create Post
     </h1>
 

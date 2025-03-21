@@ -47,6 +47,27 @@
 </div>
 @endif
 
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white p-8 rounded-lg shadow-xl max-w-md w-full">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Are you sure you want to delete this post?</h2>
+            <p class="text-gray-600 mb-6">This action cannot be undone.</p>
+        </div>
+        <div class="flex justify-center space-x-4">
+            <!-- Cancel Button -->
+            <button onclick="closeModal()" class="px-6 py-2 bg-gray-200 text-gray-700 font-medium rounded-md hover:bg-gray-300 transition duration-300">
+                Cancel
+            </button>
+            <!-- Confirm Delete Button -->
+            <button id="confirmDeleteBtn" class="px-6 py-2 bg-red-500 text-white font-medium rounded-md hover:bg-red-700 transition duration-300">
+                Delete
+            </button>
+        </div>
+    </div>
+</div>
+
+
 <!-- Blog Post Grid -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-20 w-4/5 mx-auto mt-15">
     @foreach ($posts as $post)
@@ -80,19 +101,21 @@
                     </svg>
                 </a>
 
-                <!-- Delete Button -->
-                <form action="/blog/{{ $post->slug }}" method="POST">
+                <!-- Delete Button with Modal Trigger -->
+                <button onclick="openModal('{{ $post->slug }}')" class="text-red-500 hover:text-red-700 transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6l-2 14H7L5 6"></path>
+                        <path d="M10 11v6"></path>
+                        <path d="M14 11v6"></path>
+                        <path d="M9 6V3h6v3"></path>
+                    </svg>
+                </button>
+
+                <!-- Hidden Delete Form -->
+                <form id="deleteForm" action="" method="POST" style="display: none;">
                     @csrf
-                    @method('delete')
-                    <button type="submit" class="text-red-500 hover:text-red-700 transition duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="3 6 5 6 21 6"></polyline>
-                            <path d="M19 6l-2 14H7L5 6"></path>
-                            <path d="M10 11v6"></path>
-                            <path d="M14 11v6"></path>
-                            <path d="M9 6V3h6v3"></path>
-                        </svg>
-                    </button>
+                    @method('DELETE')
                 </form>
             </div>
             @endif
@@ -102,6 +125,24 @@
 </div>
 
 <script>
+    // Delete confirmation modal
+    let deleteSlug = ""
+
+    function openModal(slug) {
+        deleteSlug = slug
+        document.getElementById("deleteModal").classList.remove("hidden")
+    }
+
+    function closeModal() {
+        document.getElementById("deleteModal").classList.add("hidden")
+    }
+
+    document.getElementById("confirmDeleteBtn").addEventListener("click", function() {
+        let form = document.getElementById("deleteForm")
+        form.action = "/blog/" + deleteSlug
+        form.submit()
+    })
+
     // Function to search posts based on title
     function searchPosts() {
         var input, filter, posts, postTitle, i, txtValue;

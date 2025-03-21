@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="w-4/5 md:w-3/5 mx-auto text-left py-10">
-    <h1 class="text-4xl font-bold text-gray-800 mb-8">
+    <h1 class="text-4xl font-bold text-gray-800 mt-8 mb-12">
         Update Post
     </h1>
 
