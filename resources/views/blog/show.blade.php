@@ -61,6 +61,47 @@
                 {{ $post->likes->count() }} Likes
             </span>
         </div>
+
+        <!-- Comments Section -->
+        <div class="mt-10">
+            <h2 class="text-3xl font-bold text-gray-900">Comments</h2>
+
+            <!-- Comment Form -->
+            <div class="mt-8">
+                @auth
+                <form action="{{ route('comment.store', $post->slug) }}" method="POST" class="flex items-center space-x-4">
+                    @csrf
+                    <input type="text" name="content" class="w-full p-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 ml-0" placeholder="Write a comment..." required>
+                    <button type="submit" class="px-6 py-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:outline-none">
+                        Post
+                    </button>
+                </form>
+                @else
+                <div class="flex items-center space-x-4">
+                    <input type="text" class="w-full p-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 ml-0" placeholder="Write a comment..." id="guestCommentInput">
+                    <button type="button" id="openCommentLoginModal" class="px-6 py-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:outline-none">
+                        Post
+                    </button>
+                </div>
+                @endauth
+            </div>
+
+            <!-- Display existing comments -->
+            <div class="space-y-6 mt-6">
+                @foreach($post->comments as $comment)
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0">
+                        <img class="h-12 w-12 rounded-full border-2 border-gray-300" src="{{ $comment->user->avatar_url ?? 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y' }}" alt="{{ $comment->user->name }}">
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <p class="text-sm font-semibold text-gray-800">{{ $comment->user->name }}</p>
+                        <p class="text-gray-600 text-sm">{{ $comment->content }}</p>
+                    </div>
+                    <p class="text-gray-400 text-xs ml-4">{{ $comment->created_at->diffForHumans() }}</p>
+                </div>
+                @endforeach
+            </div>
+        </div>
     </div>
 </div>
 
@@ -69,7 +110,7 @@
     <div class="bg-white p-8 rounded-lg shadow-xl max-w-md w-full">
         <div class="text-center mb-6">
             <h3 class="text-2xl font-semibold text-gray-800 mb-8">Login Required</h3>
-            <p class="text-gray-600 mb-8">You need to be logged in to like posts.</p>
+            <p class="text-gray-600 mb-8">You need to be logged in to interact with posts.</p>
         </div>
         <div class="flex justify-center space-x-4">
             <a href="{{ route('login') }}" class="px-6 py-2 bg-blue-500 text-white font-medium rounded-md hover:bg-blue-600 transition duration-300">
@@ -86,25 +127,39 @@
     // Modal functionality
     document.addEventListener('DOMContentLoaded', function() {
         const openModalBtn = document.getElementById('openLoginModal');
+        const openCommentModalBtn = document.getElementById('openCommentLoginModal');
         const closeModalBtn = document.getElementById('closeLoginModal');
         const modal = document.getElementById('loginModal');
 
+        // Function to show the modal
+        const showModal = function() {
+            modal.classList.remove('hidden');
+        };
+
+        // Function to hide the modal
+        const hideModal = function() {
+            modal.classList.add('hidden');
+        };
+
+        // Like button modal trigger
         if (openModalBtn) {
-            openModalBtn.addEventListener('click', function() {
-                modal.classList.remove('hidden');
-            });
+            openModalBtn.addEventListener('click', showModal);
         }
 
+        // Comment button modal trigger
+        if (openCommentModalBtn) {
+            openCommentModalBtn.addEventListener('click', showModal);
+        }
+
+        // Close button functionality
         if (closeModalBtn) {
-            closeModalBtn.addEventListener('click', function() {
-                modal.classList.add('hidden');
-            });
+            closeModalBtn.addEventListener('click', hideModal);
         }
 
         // Close modal when clicking outside of it
         window.addEventListener('click', function(event) {
             if (event.target === modal) {
-                modal.classList.add('hidden');
+                hideModal();
             }
         });
     });
