@@ -7,22 +7,27 @@
         <h1 class="text-4xl font-bold text-gray-900">
             {{ $post->title }}
         </h1>
-        <span class="text-gray-500 block text-lg mt-5">
+        <span class="text-gray-500 block text-lg text-right mt-5">
             By <span class="font-bold italic text-gray-800">{{ $post->user->name }}</span>, Created on {{ date('jS M Y', strtotime($post->created_at)) }}
         </span>
     </div>
 </div>
-<div class="w-4/5 m-auto">
-    <!-- Post Image -->
+
+<!-- Grid layout for Image and Content -->
+<div class="w-4/5 m-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+    <!-- Post Image on the Left -->
     <div class="overflow-hidden rounded-lg">
-        <img src="{{ asset('images/' . $post->image_path) }}" alt="Post Image" class="w-full max-h-screen object-cover transition duration-300 transform hover:scale-105">
+        <img src="{{ asset('images/' . $post->image_path) }}" alt="Post Image" class="w-full h-auto object-cover rounded-lg shadow-lg">
     </div>
-    <!-- Post Description -->
-    <p class="text-xl text-justify text-gray-700 pt-10 pb-12 leading-8 font-light">
-        {{ $post->description }}
-    </p>
+
+    <!-- Post Content on the Right -->
+    <div class="md:pr-10">
+        <p class="text-xl text-justify text-gray-700 leading-8 font-light">
+            {{ $post->description }}
+        </p>
+    </div>
     <!-- Like/Unlike Button -->
-    <div class="flex items-center space-x-3">
+    <div class="flex items-center space-x-3 mt-6">
         @auth
         <form action="{{ $post->likes->where('user_id', auth()->user()->id)->count() > 0 ? route('like.destroy', $post->slug) : route('like.store', $post->slug) }}" method="POST">
             @csrf
@@ -54,8 +59,8 @@
 
         <!-- Display Like Count -->
         <span class="text-lg font-semibold text-gray-800">
-            {{ $post->likes->count() }} Likes
-        </span>
+                {{ $post->likes->count() }} Likes
+            </span>
     </div>
 </div>
 

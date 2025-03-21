@@ -98,14 +98,14 @@
             </h3>
 
             <a
-                href="/blog"
+                href="/blog/weird-sleep-postures"
                 class="uppercase bg-transparent border-2 border-gray-100 text-gray-100 text-xs font-extrabold py-3 px-5 rounded-3xl hover:bg-gray-100 hover:text-purple-400 transition duration-300">
                 Read Full Article
             </a>
         </div>
     </div>
     <div>
-        <img src="{{ asset('images/LatteWeirdSleep.JPG') }}" alt="Dog training">
+        <img src="{{ asset('images/LatteWeirdSleep.png') }}" alt="Dog training">
     </div>
 </div>
 
