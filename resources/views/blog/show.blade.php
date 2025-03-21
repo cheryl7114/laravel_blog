@@ -25,42 +25,42 @@
         <p class="text-xl text-justify text-gray-700 leading-8 font-light">
             {{ $post->description }}
         </p>
-    </div>
-    <!-- Like/Unlike Button -->
-    <div class="flex items-center space-x-3 mt-6">
-        @auth
-        <form action="{{ $post->likes->where('user_id', auth()->user()->id)->count() > 0 ? route('like.destroy', $post->slug) : route('like.store', $post->slug) }}" method="POST">
-            @csrf
-            @if($post->likes->where('user_id', auth()->user()->id)->count() > 0)
-            @method('DELETE') <!-- Unlike action -->
-            @endif
-            <button type="submit" class="text-2xl bg-transparent border-none cursor-pointer">
-                @if ($post->likes->where('user_id', auth()->user()->id)->count() > 0)
-                <!-- Filled Heart (Red) if liked -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="red" viewBox="0 0 24 24">
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                </svg>
-                @else
-                <!-- Empty Heart (Gray) if not liked -->
+        <!-- Like/Unlike Button -->
+        <div class="flex items-center space-x-3 mt-8">
+            @auth
+            <form action="{{ $post->likes->where('user_id', auth()->user()->id)->count() > 0 ? route('like.destroy', $post->slug) : route('like.store', $post->slug) }}" method="POST">
+                @csrf
+                @if($post->likes->where('user_id', auth()->user()->id)->count() > 0)
+                @method('DELETE') <!-- Unlike action -->
+                @endif
+                <button type="submit" class="text-2xl bg-transparent border-none cursor-pointer">
+                    @if ($post->likes->where('user_id', auth()->user()->id)->count() > 0)
+                    <!-- Filled Heart (Red) if liked -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="red" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                    @else
+                    <!-- Empty Heart (Gray) if not liked -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="gray" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                    @endif
+                </button>
+            </form>
+            @else
+            <button type="button" id="openLoginModal" class="text-2xl bg-transparent border-none cursor-pointer">
+                <!-- Empty Heart (Gray) for guests -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="gray" viewBox="0 0 24 24">
                     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                 </svg>
-                @endif
             </button>
-        </form>
-        @else
-        <button type="button" id="openLoginModal" class="text-2xl bg-transparent border-none cursor-pointer">
-            <!-- Empty Heart (Gray) for guests -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="gray" viewBox="0 0 24 24">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-            </svg>
-        </button>
-        @endauth
+            @endauth
 
-        <!-- Display Like Count -->
-        <span class="text-lg font-semibold text-gray-800">
+            <!-- Display Like Count -->
+            <span class="text-lg font-semibold text-gray-800">
                 {{ $post->likes->count() }} Likes
             </span>
+        </div>
     </div>
 </div>
 
