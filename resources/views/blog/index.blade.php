@@ -25,6 +25,11 @@
     <input type="text" id="searchInput" placeholder="Search blog posts..." class="w-full p-3 border border-gray-300 rounded-md" onkeyup="searchPosts()" />
 </div>
 
+<!-- No results message -->
+<div id="noResultsMessage" class="w-4/5 m-auto mt-15 text-center text-xl text-gray-500 hidden">
+    No matching results
+</div>
+
 @if (session()->has('message'))
 <div class="w-4/5 m-auto mt-15">
     <div class="bg-green-500 text-white rounded-lg shadow-lg p-4 flex items-center justify-between">
@@ -42,45 +47,48 @@
 </div>
 @endif
 
-@foreach ($posts as $post)
-<div class="sm:grid grid-cols-1 lg:grid-cols-2 gap-20 w-4/5 mx-auto bg-red-200 shadow-lg rounded-lg mt-15 transition-all duration-300 hover:shadow-xl hover:scale-105 p-15 post" data-title="{{ $post->title }}">
-    <div class="overflow-hidden rounded-lg">
-        <img src="{{ asset('images/' . $post->image_path) }}" alt="Post Image" class="w-full h-80 object-cover transition duration-300 transform hover:scale-110">
-    </div>
-    <div class="">
-        <h2 class="text-3xl font-semibold text-gray-800 hover:text-blue-500 transition duration-300 mb-4">
-            {{ $post->title }}
-        </h2>
-        <p class="text-gray-500">
-            By <span class="font-bold italic text-gray-800">{{ $post->user->name }}</span> | Created on {{ date('jS M Y', strtotime($post->created_at)) }}
-        </p>
+<!-- Blog Post Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-20 w-4/5 mx-auto mt-15">
+    @foreach ($posts as $post)
+    <div class="bg-red-200 shadow-lg rounded-lg p-15 post" data-title="{{ $post->title }}">
+        <div class="overflow-hidden rounded-lg">
+            <img src="{{ asset('images/' . $post->image_path) }}" alt="Post Image" class="w-full h-80 object-cover transition duration-300 transform hover:scale-110">
+        </div>
+        <div>
+            <h2 class="text-3xl font-semibold text-gray-800 hover:text-blue-500 transition duration-300 mb-4 mt-8">
+                {{ $post->title }}
+            </h2>
+            <p class="text-gray-500">
+                By <span class="font-bold italic text-gray-800">{{ $post->user->name }}</span> | Created on {{ date('jS M Y', strtotime($post->created_at)) }}
+            </p>
 
-        <p class="text-lg text-gray-700 pt-8 pb-10 leading-8 font-light text-justify">
-            {{ Str::limit($post->description, 150) }}
-        </p>
+            <p class="text-lg text-gray-700 pt-8 pb-10 leading-8 font-light text-justify">
+                {{ Str::limit($post->description, 180) }}
+            </p>
 
-        <a href="/blog/{{ $post->slug }}" class="inline-block bg-blue-500 text-white text-lg font-extrabold py-4 px-8 rounded-3xl transition duration-300 transform hover:bg-blue-600 hover:scale-105">
-            Keep Reading
-        </a>
-
-        @if (isset(Auth::user()->id) && Auth::user()->id == $post->user_id)
-        <div class="mt-4 flex justify-end space-x-4">
-            <a href="/blog/{{ $post->slug }}/edit" class="text-gray-700 italic hover:text-blue-500 transition duration-300">
-                Edit
+            <a href="/blog/{{ $post->slug }}" class="inline-block bg-blue-500 text-white text-lg font-extrabold py-4 px-8 rounded-3xl transition duration-300 transform hover:bg-blue-600 hover:scale-105">
+                Keep Reading
             </a>
 
-            <form action="/blog/{{ $post->slug }}" method="POST">
-                @csrf
-                @method('delete')
-                <button class="text-red-500 hover:text-red-700 transition duration-300">
-                    Delete
-                </button>
-            </form>
+            @if (isset(Auth::user()->id) && Auth::user()->id == $post->user_id)
+            <div class="mt-4 flex justify-end space-x-4">
+                <a href="/blog/{{ $post->slug }}/edit" class="text-gray-700 italic hover:text-blue-500 transition duration-300">
+                    Edit
+                </a>
+
+                <form action="/blog/{{ $post->slug }}" method="POST">
+                    @csrf
+                    @method('delete')
+                    <button class="text-red-500 hover:text-red-700 transition duration-300">
+                        Delete
+                    </button>
+                </form>
+            </div>
+            @endif
         </div>
-        @endif
     </div>
+    @endforeach
 </div>
-@endforeach
 
 <script>
     // Function to search posts based on title
@@ -89,15 +97,25 @@
         input = document.getElementById('searchInput');
         filter = input.value.toUpperCase();
         posts = document.getElementsByClassName('post');
+        var noResultsMessage = document.getElementById('noResultsMessage');
+        var visiblePosts = 0;
 
         for (i = 0; i < posts.length; i++) {
             postTitle = posts[i].getAttribute("data-title");
             txtValue = postTitle ? postTitle.toUpperCase() : '';
             if (txtValue.indexOf(filter) > -1) {
                 posts[i].style.display = "";
+                visiblePosts++;
             } else {
                 posts[i].style.display = "none";
             }
+        }
+
+        // Show "No matching results" if no posts are visible
+        if (visiblePosts === 0) {
+            noResultsMessage.classList.remove('hidden');
+        } else {
+            noResultsMessage.classList.add('hidden');
         }
     }
 </script>

@@ -1,4 +1,4 @@
-<footer class="bg-gray-800 py-20 mt-20">
+<footer class="bg-gray-800 py-20 mt-32">
     <div class="sm:grid grid-cols-3 w-4/5 pb-10 m-auto border-b-2 border-gray-700">
         <div>
             <h3 class="text-l sm:font-bold text-gray-100">
@@ -14,6 +14,11 @@
                 <li class="pb-1">
                     <a href="/blog">
                         Blog
+                    </a>
+                </li>
+                <li class="pb-1">
+                    <a href="/about">
+                        About
                     </a>
                 </li>
                 <li class="pb-1">
@@ -38,6 +43,11 @@
                 <li class="pb-1">
                     <a href="/contact">
                         Contact Us
+                    </a>
+                </li>
+                <li class="pb-1">
+                    <a href="https://www.instagram.com/cheryl7114" target="_blank">
+                        Follow me on Instagram
                     </a>
                 </li>
             </ul>
