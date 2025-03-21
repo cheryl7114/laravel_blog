@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,9 @@ Route::middleware(['auth'])->group(function () {
     // Like routes for blog posts
     Route::post('/like/{post:slug}', [LikeController::class, 'store'])->name('like.store');
     Route::delete('/like/{post:slug}', [LikeController::class, 'destroy'])->name('like.destroy');
+    // Comment routes
+    Route::post('/blog/{post:slug}/comments', [CommentController::class, 'store'])->name('comment.store');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
 });
 
 // Public routes (viewing blog posts)

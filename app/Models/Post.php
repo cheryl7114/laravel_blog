@@ -31,6 +31,11 @@ class Post extends Model
         return $this->hasMany(Like::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     // Tells Laravel to use the slug column as identification instead of postID
     public function getRouteKeyName()
     {

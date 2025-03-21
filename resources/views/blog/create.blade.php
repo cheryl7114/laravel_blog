@@ -3,7 +3,7 @@
 @section('content')
 <div class="w-4/5 md:w-3/5 mx-auto text-left py-10">
     @include('layouts.back')
-    <h1 class="text-4xl font-bold text-gray-800 mb-8">
+    <h1 class="text-4xl font-bold text-gray-800 mb-10">
         Create Post
     </h1>
 
@@ -21,7 +21,7 @@
         @csrf
         <!-- Title Input -->
         <div class="mb-6 mt-5">
-            <label for="title" class="block text-lg font-medium text-gray-700 mb-2">Post Title</label>
+            <label for="title" class="block text-lg font-medium text-gray-700 mb-5">Post Title</label>
             <input
                 type="text"
                 name="title"
@@ -32,7 +32,7 @@
 
         <!-- Description Textarea -->
         <div class="mb-6 mt-10">
-            <label for="description" class="block text-lg font-medium text-gray-700 mb-2">Description</label>
+            <label for="description" class="block text-lg font-medium text-gray-700 mb-5">Description</label>
             <textarea
                 name="description"
                 id="description"
@@ -42,7 +42,7 @@
 
         <!-- Image Upload with Preview -->
         <div class="mb-6 mt-10">
-            <label class="block text-lg font-medium text-gray-700 mb-2">Upload an Image</label>
+            <label class="block text-lg font-medium text-gray-700 mb-5">Upload an Image</label>
             <div class="relative">
                 <input
                     type="file"
