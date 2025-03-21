@@ -1,9 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="relative background-image">
+    <div class="absolute inset-0 flex items-center justify-center">
+        <h1 class="text-6xl font-extrabold text-white drop-shadow-lg">ABOUT</h1>
+    </div>
+</div>
 <div class="py-16 ">
     <div class="max-w-4xl mx-auto px-6 text-center">
-        <h1 class="text-5xl font-extrabold text-gray-800 drop-shadow-lg">About Pulabo</h1>
         <p class="text-xl text-gray-600 mt-6 leading-loose italic">
             Welcome to <span class="font-bold text-pink-500">Pulabo</span>, a personal blog where I share my journey with dogs! 🐶💖
         </p>
@@ -71,9 +75,9 @@
     </div>
 
     <div class="max-w-5xl mx-auto mt-16 px-6 text-center">
-        <h2 class="text-4xl font-extrabold text-gray-800 drop-shadow-md">Meet The Gang! 🐕</h2>
+        <h2 class="text-4xl font-extrabold text-gray-800 drop-shadow-md">Meet The Gang 🐕</h2>
         <p class="text-gray-700 mt-4 text-lg leading-relaxed mb-12">
-            As much as I love all dogs, these 3 will always be my favourite <3
+            As much as I love all dogs, these 3 will always be my favourite (they didn't threaten me to write this!)
         </p>
         <div class="grid sm:grid-cols-3 gap-12">
             <div class="bg-white p-8 shadow-xl rounded-lg text-center transform hover:-translate-y-1 transition-all duration-300">

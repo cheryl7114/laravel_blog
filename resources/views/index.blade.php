@@ -1,13 +1,18 @@
 @extends('layouts.app')
-
 @section('content')
-<div class="relative background-image">
+<div class="relative">
+    <!-- Video Background -->
+    <video autoplay muted loop class="absolute top-0 left-0 w-full h-full object-cover z-0">
+        <source src="{{ asset('images/home.mp4') }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
     <!-- Blurred overlay -->
-    <div class="absolute inset-0 backdrop-blur-md"></div>
+    <div class="absolute top-0 left-0 w-full h-full backdrop-blur-md z-10"></div>
 
     <!-- Centered White Box -->
-    <div class="relative flex items-center justify-center h-full px-4">
-        <div class="bg-white bg-opacity-50 w-4/5 max-w-5xl h-auto min-h-80 py-10 px-6 sm:px-10 rounded-md shadow-lg text-center flex flex-col justify-center">
+    <div class="relative flex items-center justify-center h-screen px-4 z-20">
+        <div class="bg-white bg-opacity-50 w-4/5 max-w-5xl py-10 px-6 sm:px-10 rounded-md shadow-lg text-center flex flex-col justify-center">
             <h1 class="text-gray-900 text-4xl mt-5 font-bold">
                 Welcome to Pulabo!
             </h1>
@@ -15,19 +20,19 @@
                 Where every bark tells a story
             </h2>
             <a href="/blog"
-               class="mt-6 ml-15 mr-15 inline-block bg-pink-100 py-3 px-6 font-bold text-lg uppercase rounded">
+               class="mt-6 ml-15 mr-15 inline-block bg-pink-200 py-3 px-6 font-bold text-lg uppercase rounded">
                 Explore Pawsome Stories
             </a>
         </div>
     </div>
 </div>
 
-<div class="sm:grid grid-cols-2 gap-20 w-4/5 mx-auto py-15 border-b border-gray-200">
+<div class="sm:grid grid-cols-1 md:grid-cols-2 w-4/5 mx-20 my-15 py-15 border-b border-gray-200">
     <div>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFUAfyVe3Easiycyh3isP9wDQTYuSmGPsPQvLIJdEYvQ_DsFq5Ez2Nh_QjiS3oZ3B8ZPfK9cZQyIStmQMV1lDPLw" width="700" alt="Happy dog">
+        <img src="{{ asset('images/bobaInDress.JPG') }}" class="rounded-lg w-full max-w-xs mx-auto h-auto object-contain shadow-lg" width="700" alt="Happy dog">
     </div>
 
-    <div class="m-auto sm:m-auto text-left w-4/5 block">
+    <div class="m-auto text-justify block">
         <h2 class="text-3xl font-extrabold text-gray-600">
             Discover the Joy of Dog Companionship
         </h2>
@@ -85,11 +90,11 @@
     <div class="flex bg-purple-400 pt-10">
         <div class="m-auto pt-4 pb-16 sm:m-auto w-4/5 block">
                 <span class="uppercase text-xs">
-                    TRAINING
+                    SLEEPING POSTURES?
                 </span>
 
             <h3 class="text-xl font-bold py-10">
-                10 Essential Commands Every Dog Should Know - Teaching your furry friend these basic commands can make your life easier and keep your dog safe in potentially dangerous situations.
+                Ever turned your head around just to see your dog sleeping like he doesn't have any bones?
             </h3>
 
             <a
@@ -100,13 +105,13 @@
         </div>
     </div>
     <div>
-        <img src="https://images.unsplash.com/photo-1544568100-847a948585b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80" alt="Dog training">
+        <img src="{{ asset('images/LatteWeirdSleep.JPG') }}" alt="Dog training">
     </div>
 </div>
 
 <div class="sm:grid grid-cols-2 w-4/5 m-auto mt-10">
     <div>
-        <img src="https://images.unsplash.com/photo-1554456854-55a089fd4cb2?ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80" alt="Dog playing">
+        <img src="{{ asset('images/bobaInVet.JPG') }}" alt="Dog health">
     </div>
     <div class="flex bg-pink-400 pt-10">
         <div class="m-auto pt-4 pb-16 sm:m-auto w-4/5 block">
@@ -115,11 +120,11 @@
                 </span>
 
             <h3 class="text-xl font-bold py-10">
-                Understanding Your Dog's Nutritional Needs - Learn how to provide balanced meals that keep your dog healthy and happy throughout all stages of life.
+                Keeping an eye on your furry buddy to prevent accidents - ones that you definitely wish they never have to go through.
             </h3>
 
             <a
-                href="/blog"
+                href="/blog/the-day-boba-broke-her-leg"
                 class="uppercase bg-transparent border-2 border-gray-100 text-gray-100 text-xs font-extrabold py-3 px-5 rounded-3xl hover:bg-gray-100 hover:text-pink-300 transition duration-300">
                 Read Full Article
             </a>
