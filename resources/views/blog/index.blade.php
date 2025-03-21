@@ -20,6 +20,11 @@
     </div>
 </div>
 
+<!-- Search Bar -->
+<div class="w-4/5 m-auto mt-15">
+    <input type="text" id="searchInput" placeholder="Search blog posts..." class="w-full p-3 border border-gray-300 rounded-md" onkeyup="searchPosts()" />
+</div>
+
 @if (session()->has('message'))
 <div class="w-4/5 m-auto mt-15">
     <div class="bg-green-500 text-white rounded-lg shadow-lg p-4 flex items-center justify-between">
@@ -37,9 +42,8 @@
 </div>
 @endif
 
-
 @foreach ($posts as $post)
-<div class="sm:grid grid-cols-1 lg:grid-cols-2 gap-20 w-4/5 mx-auto bg-red-200 shadow-lg rounded-lg mt-15 transition-all duration-300 hover:shadow-xl hover:scale-105 p-15">
+<div class="sm:grid grid-cols-1 lg:grid-cols-2 gap-20 w-4/5 mx-auto bg-red-200 shadow-lg rounded-lg mt-15 transition-all duration-300 hover:shadow-xl hover:scale-105 p-15 post" data-title="{{ $post->title }}">
     <div class="overflow-hidden rounded-lg">
         <img src="{{ asset('images/' . $post->image_path) }}" alt="Post Image" class="w-full h-80 object-cover transition duration-300 transform hover:scale-110">
     </div>
@@ -77,5 +81,25 @@
     </div>
 </div>
 @endforeach
+
+<script>
+    // Function to search posts based on title
+    function searchPosts() {
+        var input, filter, posts, postTitle, i, txtValue;
+        input = document.getElementById('searchInput');
+        filter = input.value.toUpperCase();
+        posts = document.getElementsByClassName('post');
+
+        for (i = 0; i < posts.length; i++) {
+            postTitle = posts[i].getAttribute("data-title");
+            txtValue = postTitle ? postTitle.toUpperCase() : '';
+            if (txtValue.indexOf(filter) > -1) {
+                posts[i].style.display = "";
+            } else {
+                posts[i].style.display = "none";
+            }
+        }
+    }
+</script>
 
 @endsection
