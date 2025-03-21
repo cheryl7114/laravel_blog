@@ -15,7 +15,7 @@
 <div class="w-4/5 m-auto">
     <!-- Post Image -->
     <div class="overflow-hidden rounded-lg">
-        <img src="{{ asset('images/' . $post->image_path) }}" alt="Post Image" class="w-full h-96 object-cover transition duration-300 transform hover:scale-105">
+        <img src="{{ asset('images/' . $post->image_path) }}" alt="Post Image" class="w-full max-h-screen object-cover transition duration-300 transform hover:scale-105">
     </div>
     <!-- Post Description -->
     <p class="text-xl text-justify text-gray-700 pt-10 pb-12 leading-8 font-light">

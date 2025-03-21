@@ -76,7 +76,7 @@ class PostsController extends Controller
     public function show($slug)
     {
         return view('blog.show')
-            ->with('post', Post::where('slug', $slug)->first());
+            ->with('post', Post::where('slug', $slug)->firstOrFail());
     }
 
     /**
@@ -125,7 +125,11 @@ class PostsController extends Controller
      */
     public function destroy($slug)
     {
-        $post = Post::where('slug', $slug);
+        $post = Post::where('slug', $slug)->firstOrFail();
+
+        // Delete all likes related to this post,
+        $post->likes()->delete();
+        // then delete post
         $post->delete();
 
         return redirect('/blog')

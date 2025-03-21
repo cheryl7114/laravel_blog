@@ -36,7 +36,7 @@
 
             <ul class="py-4 sm:text-s pt-4 text-gray-400">
                 <li class="pb-1">
-                    <a href="/">
+                    <a href="/contact">
                         Contact Us
                     </a>
                 </li>
@@ -50,7 +50,7 @@
 
             <ul class="py-4 sm:text-s pt-4 text-gray-400">
                 <li class="pb-1">
-                    <a href="/blog/cute-little-boba-2">
+                    <a href="/blog/cute-little-boba">
                         Cute Little Boba
                     </a>
                 </li>

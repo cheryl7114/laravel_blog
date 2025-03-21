@@ -16,4 +16,8 @@ class PagesController extends Controller
         return view('contact.index');
     }
 
+    public function about()
+    {
+        return view('about.index');
+    }
 }
