@@ -72,15 +72,26 @@
 
             @if (isset(Auth::user()->id) && Auth::user()->id == $post->user_id)
             <div class="mt-4 flex justify-end space-x-4">
-                <a href="/blog/{{ $post->slug }}/edit" class="text-gray-700 italic hover:text-blue-500 transition duration-300">
-                    Edit
+                <!-- Edit Button -->
+                <a href="/blog/{{ $post->slug }}/edit" class="text-gray-500 hover:text-blue-500 transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 20h9"></path>
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"></path>
+                    </svg>
                 </a>
 
+                <!-- Delete Button -->
                 <form action="/blog/{{ $post->slug }}" method="POST">
                     @csrf
                     @method('delete')
-                    <button class="text-red-500 hover:text-red-700 transition duration-300">
-                        Delete
+                    <button type="submit" class="text-red-500 hover:text-red-700 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6l-2 14H7L5 6"></path>
+                            <path d="M10 11v6"></path>
+                            <path d="M14 11v6"></path>
+                            <path d="M9 6V3h6v3"></path>
+                        </svg>
                     </button>
                 </form>
             </div>

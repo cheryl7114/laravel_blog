@@ -48,7 +48,7 @@ class PostsController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'image' => 'required|mimes:jpg,png,jpeg|max:5048'
+            'image' => 'required|mimes:jpg,jpeg,png|lowercase'
         ]);
 
         $newImageName = uniqid() . '-' . $request->title . '.' . $request->image->extension();
