@@ -1,51 +1,65 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="w-4/5 m-auto text-left">
-    <div class="py-15">
-        <h1 class="text-6xl">
-            Update Post
-        </h1>
-    </div>
-</div>
+<div class="w-4/5 md:w-3/5 mx-auto text-left py-10">
+    <h1 class="text-4xl font-bold text-gray-800 mb-8">
+        Update Post
+    </h1>
 
-@if ($errors->any())
-    <div class="w-4/5 m-auto">
+    @if ($errors->any())
+    <div class="w-full bg-red-500 text-white rounded-lg p-4 mb-6">
         <ul>
             @foreach ($errors->all() as $error)
-                <li class="w-1/5 mb-4 text-gray-50 bg-red-700 rounded-2xl py-4">
-                    {{ $error }}
-                </li>
+            <li>{{ $error }}</li>
             @endforeach
         </ul>
     </div>
-@endif
+    @endif
 
-<div class="w-4/5 m-auto pt-20">
-    <form 
-        action="/blog/{{ $post->slug }}"
-        method="POST"
-        enctype="multipart/form-data">
+    <form action="/blog/{{ $post->slug }}" method="POST" class="bg-white p-8 rounded-lg shadow-lg">
         @csrf
         @method('PUT')
 
-        <input 
-            type="text"
-            name="title"
-            value="{{ $post->title }}"
-            class="bg-transparent block border-b-2 w-full h-20 text-6xl outline-none">
+        <!-- Title Input -->
+        <div class="mb-6 mt-5">
+            <label for="title" class="block text-lg font-medium text-gray-700 mb-5">Post Title</label>
+            <input
+                type="text"
+                name="title"
+                id="title"
+                value="{{ $post->title }}"
+                class="block w-full px-4 py-3 text-xl bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+        </div>
 
-        <textarea 
-            name="description"
-            placeholder="Description..."
-            class="py-20 bg-transparent block border-b-2 w-full h-60 text-xl outline-none">{{ $post->description }}</textarea> 
+        <!-- Description Textarea -->
+        <div class="mb-6 mt-10">
+            <label for="description" class="block text-lg font-medium text-gray-700 mb-5">Description</label>
+            <textarea
+                name="description"
+                id="description"
+                class="block w-full px-4 py-3 text-xl bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 h-52">{{ $post->description }}</textarea>
+        </div>
 
-        <button    
-            type="submit"
-            class="uppercase mt-15 bg-blue-500 text-gray-100 text-lg font-extrabold py-4 px-8 rounded-3xl">
-            Submit Post
-        </button>
+        <!-- Current Image Display (No Change Allowed) -->
+        <div class="mb-15 mt-10">
+            <label class="block text-lg font-medium text-gray-700 mb-5">Current Image</label>
+            <img src="{{ asset('images/' . $post->image_path) }}" alt="Post Image" class="w-40 h-40 object-cover rounded-lg shadow-md">
+            <p class="text-gray-500 mt-5">You cannot change the image for this post.</p>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-center gap-6 mb-10">
+            <!-- Cancel Button -->
+            <a href="/blog" class="w-1/3 text-center bg-gray-400 text-white text-xl py-3 rounded-lg shadow-lg hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 transition duration-300">
+                Cancel
+            </a>
+
+            <!-- Submit Button -->
+            <button type="submit" class="w-1/3 bg-blue-500 text-white text-xl py-3 rounded-lg shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                Update Post
+            </button>
+        </div>
+
     </form>
 </div>
-
 @endsection
