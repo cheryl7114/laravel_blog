@@ -13,7 +13,7 @@
             <div class="space-y-6">
                 <!-- Email Field -->
                 <div class="flex flex-col">
-                    <label for="email" class="text-lg text-gray-700">{{ __('E-Mail Address') }}</label>
+                    <label for="email" class="text-lg text-gray-700">{{ __('E-mail Address') }}</label>
                     <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email" class="mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
                     @error('email')
                     <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
