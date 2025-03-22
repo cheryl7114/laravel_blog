@@ -63,22 +63,22 @@
         </div>
 
         <!-- Comments Section -->
-        <div class="mt-10">
-            <h2 class="text-3xl font-bold text-gray-900">Comments</h2>
+        <div>
+<!--            <h2 class="text-3xl font-bold text-gray-900">Comments</h2>-->
 
             <!-- Comment Form -->
             <div class="mt-8">
                 @auth
-                <form action="{{ route('comment.store', $post->slug) }}" method="POST" class="flex items-center space-x-4">
+                <form action="{{ route('comment.store', $post->slug) }}" method="POST" class="flex items-center ">
                     @csrf
-                    <input type="text" name="content" class="w-full p-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 ml-0" placeholder="Write a comment..." required>
-                    <button type="submit" class="px-6 py-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:outline-none">
+                    <input type="text" name="content" class="w-full p-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500" placeholder="Write a comment..." required>
+                    <button type="submit" class="px-6 py-3 ml-5 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:outline-none">
                         Post
                     </button>
                 </form>
                 @else
                 <div class="flex items-center space-x-4">
-                    <input type="text" class="w-full p-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 ml-0" placeholder="Write a comment..." id="guestCommentInput">
+                    <input type="text" class="w-full p-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500" placeholder="Write a comment..." id="guestCommentInput">
                     <button type="button" id="openCommentLoginModal" class="px-6 py-3 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:outline-none">
                         Post
                     </button>
@@ -89,15 +89,21 @@
             <!-- Display existing comments -->
             <div class="space-y-6 mt-6">
                 @foreach($post->comments as $comment)
-                <div class="flex items-center space-x-4">
+                <div class="flex items-start space-x-4">
+                    <!-- Profile Picture -->
                     <div class="flex-shrink-0">
                         <img class="h-12 w-12 rounded-full border-2 border-gray-300" src="{{ $comment->user->avatar_url ?? 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y' }}" alt="{{ $comment->user->name }}">
                     </div>
-                    <div class="flex items-center space-x-2">
-                        <p class="text-sm font-semibold text-gray-800">{{ $comment->user->name }}</p>
-                        <p class="text-gray-600 text-sm">{{ $comment->content }}</p>
+
+                    <!-- Comment Content -->
+                    <div>
+                        <div class="flex items-start space-x-2">
+                            <!-- Username and Comment -->
+                            <p class="text-gray-600 text-sm leading-relaxed"><span class="font-semibold mr-2">{{ $comment->user->name }}</span>{{ $comment->content }}</p>
+                        </div>
+                        <!-- Time Posted -->
+                        <p class="text-gray-400 text-xs mt-2">{{ $comment->created_at->diffForHumans() }}</p>
                     </div>
-                    <p class="text-gray-400 text-xs ml-4">{{ $comment->created_at->diffForHumans() }}</p>
                 </div>
                 @endforeach
             </div>
