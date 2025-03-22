@@ -85,7 +85,9 @@
             </div>
 
             <!-- Display existing comments -->
+            <!-- Display existing comments -->
             <div class="space-y-6 mt-6">
+                @if($post->comments->count() > 0)
                 @foreach($post->comments->sortByDesc('created_at') as $comment)
                 <div class="flex items-start space-x-4">
                     <!-- Profile Picture -->
@@ -115,6 +117,11 @@
                     </div>
                 </div>
                 @endforeach
+                @else
+                <div class="text-center py-8">
+                    <p class="text-gray-500 italic">Be the first one to leave a comment!</p>
+                </div>
+                @endif
             </div>
         </div>
     </div>
