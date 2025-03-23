@@ -85,7 +85,6 @@
             </div>
 
             <!-- Display existing comments -->
-            <!-- Display existing comments -->
             <div class="space-y-6 mt-6">
                 @if($post->comments->count() > 0)
                 @foreach($post->comments->sortByDesc('created_at') as $comment)

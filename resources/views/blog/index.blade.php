@@ -67,18 +67,46 @@
     </div>
 </div>
 
-
 <!-- Blog Post Grid -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-20 w-4/5 mx-auto mt-15">
     @foreach ($posts as $post)
-    <div class="bg-red-200 shadow-lg rounded-lg p-15 post" data-title="{{ $post->title }}">
-        <div class="overflow-hidden rounded-lg">
+    <div class="bg-red-200 shadow-lg rounded-lg p-15 post cursor-pointer" data-title="{{ $post->title }}">
+        <div class="overflow-hidden rounded-lg" onclick="window.location.href='/blog/{{ $post->slug }}'">
             <img src="{{ asset('images/' . $post->image_path) }}" alt="Post Image" class="w-full h-80 object-cover transition duration-300 transform hover:scale-110">
         </div>
-        <div>
+        @if (isset(Auth::user()->id) && Auth::user()->id == $post->user_id)
+        <div class="mt-10 flex justify-end space-x-4">
+            <!-- Edit Button -->
+            <a href="/blog/{{ $post->slug }}/edit" class="text-gray-500 hover:text-blue-500 transition duration-300" onclick="event.stopPropagation();">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 20h9"></path>
+                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"></path>
+                </svg>
+            </a>
+
+            <!-- Delete Button with Modal Trigger -->
+            <button onclick="event.stopPropagation(); openModal('{{ $post->slug }}')" class="text-red-500 hover:text-red-700 transition duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6l-2 14H7L5 6"></path>
+                    <path d="M10 11v6"></path>
+                    <path d="M14 11v6"></path>
+                    <path d="M9 6V3h6v3"></path>
+                </svg>
+            </button>
+
+            <!-- Hidden Delete Form -->
+            <form id="deleteForm" action="" method="POST" style="display: none;">
+                @csrf
+                @method('DELETE')
+            </form>
+        </div>
+        @endif
+        <div onclick="window.location.href='/blog/{{ $post->slug }}'">
             <h2 class="text-3xl font-semibold text-gray-800 hover:text-blue-500 transition duration-300 mb-4 mt-8">
                 {{ $post->title }}
             </h2>
+
             <p class="text-gray-500">
                 By <span class="font-bold italic text-gray-800">{{ $post->user->name }}</span> | Created on {{ date('jS M Y', strtotime($post->created_at)) }}
             </p>
@@ -87,38 +115,21 @@
                 {{ Str::limit($post->description, 180) }}
             </p>
 
-            <a href="/blog/{{ $post->slug }}" class="inline-block bg-blue-500 text-white text-lg font-extrabold py-4 px-8 rounded-3xl transition duration-300 transform hover:bg-blue-600 hover:scale-105">
-                Keep Reading
-            </a>
-
-            @if (isset(Auth::user()->id) && Auth::user()->id == $post->user_id)
-            <div class="mt-4 flex justify-end space-x-4">
-                <!-- Edit Button -->
-                <a href="/blog/{{ $post->slug }}/edit" class="text-gray-500 hover:text-blue-500 transition duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 20h9"></path>
-                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"></path>
+            <div class="flex items-center space-x-6">
+                <div class="flex items-center text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mr-1" width="26" height="26" fill="none" stroke="red" stroke-width="1.5" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                     </svg>
-                </a>
+                    <span class="text-lg font-semibold">{{ $post->likes->count() }}</span>
+                </div>
 
-                <!-- Delete Button with Modal Trigger -->
-                <button onclick="openModal('{{ $post->slug }}')" class="text-red-500 hover:text-red-700 transition duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path d="M19 6l-2 14H7L5 6"></path>
-                        <path d="M10 11v6"></path>
-                        <path d="M14 11v6"></path>
-                        <path d="M9 6V3h6v3"></path>
+                <div class="flex items-center text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-1 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                     </svg>
-                </button>
-
-                <!-- Hidden Delete Form -->
-                <form id="deleteForm" action="" method="POST" style="display: none;">
-                    @csrf
-                    @method('DELETE')
-                </form>
+                    <span class="text-lg font-semibold">{{ $post->comments->count() }}</span>
+                </div>
             </div>
-            @endif
         </div>
     </div>
     @endforeach
