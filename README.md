@@ -40,6 +40,11 @@ Migrate the tables
 ```
 php artisan migrate
 ```
+## To start the development server <br>
+
+```
+php artisan serve
+```
 
 ## Contributing
 Do not hesitate to contribute to the project by adapting or adding features ! Bug reports or pull requests are welcome.
