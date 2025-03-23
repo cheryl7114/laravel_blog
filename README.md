@@ -36,15 +36,26 @@ DB_USERNAME={USERNAME}
 DB_PASSWORD={PASSWORD}
 ```
 
-Migrate the tables
+Migrate the tables and import data
 ```
 php artisan migrate
+php artisan db:seed
 ```
-## To start the development server <br>
 
+## To start the development server <br>
 ```
 php artisan serve
 ```
 
-## Contributing
-Do not hesitate to contribute to the project by adapting or adding features ! Bug reports or pull requests are welcome.
+## Features
+Two access levels - normal user and admin user <br>
+•	All users can leave likes and comments under posts, and delete only their own comments<br>
+•	Admin privileges: add, edit, and delete posts<br>
+
+Login as admin with the following credentials:
+```
+admin@admin.com
+123Qwerty@
+```
+
+
