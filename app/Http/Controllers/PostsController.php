@@ -129,6 +129,8 @@ class PostsController extends Controller
 
         // Delete all likes related to this post,
         $post->likes()->delete();
+        // Delete all comments related to this post,
+        $post->comments()->delete();
         // then delete post
         $post->delete();
 
